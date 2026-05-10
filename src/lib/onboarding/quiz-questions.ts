@@ -1,0 +1,91 @@
+import type { QuizQuestion } from '@/components/onboarding/quiz-types'
+
+export const QUIZ_QUESTIONS: QuizQuestion[] = [
+  {
+    id: 'business_type',
+    step: 1,
+    type: 'single_select',
+    question: 'Qual é o tipo do seu negócio?',
+    autoAdvance: true,
+    options: [
+      { value: 'food_service', label: 'Restaurante / Food Service', icon: 'UtensilsCrossed' },
+      { value: 'varejo', label: 'Varejo / Comércio', icon: 'ShoppingBag' },
+      { value: 'manutencao', label: 'Manutenção / Serviços Técnicos', icon: 'Wrench' },
+      { value: 'servicos_gerais', label: 'Serviços Gerais', icon: 'Briefcase' },
+    ],
+  },
+  {
+    id: 'team_size',
+    step: 2,
+    type: 'single_select',
+    question: 'Quantas pessoas trabalham com você?',
+    autoAdvance: true,
+    options: [
+      { value: 'solo', label: 'Só eu' },
+      { value: '2-5', label: '2 a 5 pessoas' },
+      { value: '6-20', label: '6 a 20 pessoas' },
+      { value: '20+', label: 'Mais de 20' },
+    ],
+  },
+  {
+    id: 'user_role',
+    step: 3,
+    type: 'single_select',
+    question: 'Qual é o seu papel na empresa?',
+    autoAdvance: true,
+    options: [
+      { value: 'dono', label: 'Dono / Sócio', icon: 'Crown' },
+      { value: 'gestor', label: 'Gerente / Gestor', icon: 'UserCog' },
+      { value: 'operador', label: 'Operador / Funcionário', icon: 'User' },
+    ],
+  },
+  {
+    id: 'main_challenge',
+    step: 4,
+    type: 'single_select',
+    question: 'Qual é o seu maior desafio hoje?',
+    autoAdvance: true,
+    options: [
+      { value: 'controle_estoque', label: 'Controle de estoque', icon: 'Package' },
+      { value: 'financeiro', label: 'Gestão financeira', icon: 'DollarSign' },
+      { value: 'equipe', label: 'Gestão da equipe', icon: 'Users' },
+      { value: 'processos', label: 'Processos e checklists', icon: 'ClipboardCheck' },
+      { value: 'vendas', label: 'Vendas e PDV', icon: 'ShoppingCart' },
+      { value: 'outro', label: 'Outro', icon: 'MoreHorizontal' },
+    ],
+  },
+  {
+    id: 'current_tools',
+    step: 5,
+    type: 'multi_select',
+    question: 'O que você usa hoje para gerenciar?',
+    skippable: true,
+    options: [
+      { value: 'planilha', label: 'Planilha (Excel/Sheets)', icon: 'Table' },
+      { value: 'whatsapp', label: 'WhatsApp', icon: 'MessageCircle' },
+      { value: 'papel', label: 'Papel / anotações', icon: 'FileText' },
+      { value: 'sistema', label: 'Outro sistema', icon: 'Monitor' },
+      { value: 'nenhum', label: 'Nada ainda', icon: 'X' },
+    ],
+  },
+  {
+    id: 'primary_goal',
+    step: 6,
+    type: 'single_select',
+    question: 'O que você quer alcançar com o Tilog?',
+    autoAdvance: true,
+    options: [
+      { value: 'organizar', label: 'Organizar meu negócio', icon: 'Layout' },
+      { value: 'crescer', label: 'Crescer e escalar', icon: 'TrendingUp' },
+      { value: 'economizar', label: 'Economizar tempo', icon: 'Clock' },
+      { value: 'controlar', label: 'Ter mais controle', icon: 'BarChart2' },
+    ],
+  },
+  {
+    id: 'company_name',
+    step: 7,
+    type: 'text',
+    question: 'Como se chama o seu negócio?',
+    placeholder: 'Ex: Restaurante Sabor & Arte',
+  },
+]

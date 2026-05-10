@@ -1,0 +1,154 @@
+@import "tailwindcss";
+
+@theme {
+  /* ── Neutral palette ── */
+  --color-neutral-0: #ffffff;
+  --color-neutral-50: #fafafa;
+  --color-neutral-100: #f5f5f5;
+  --color-neutral-200: #e5e5e5;
+  --color-neutral-300: #d4d4d4;
+  --color-neutral-400: #a3a3a3;
+  --color-neutral-500: #737373;
+  --color-neutral-600: #525252;
+  --color-neutral-700: #404040;
+  --color-neutral-800: #262626;
+  --color-neutral-900: #171717;
+  --color-neutral-950: #0a0a0a;
+
+  /* ── Semantic background ── */
+  --color-background: var(--color-neutral-0);
+  --color-surface: var(--color-neutral-0);
+  --color-surface-raised: var(--color-neutral-50);
+  --color-surface-overlay: rgba(0, 0, 0, 0.04);
+
+  /* ── Borders ── */
+  --color-border: var(--color-neutral-200);
+  --color-border-strong: var(--color-neutral-300);
+  --color-border-focus: var(--color-neutral-950);
+
+  /* ── Text ── */
+  --color-text: var(--color-neutral-950);
+  --color-text-secondary: var(--color-neutral-600);
+  --color-text-tertiary: var(--color-neutral-400);
+  --color-text-disabled: var(--color-neutral-300);
+  --color-text-inverse: var(--color-neutral-0);
+
+  /* ── Status: danger ── */
+  --color-danger: #dc2626;
+  --color-danger-light: #fef2f2;
+  --color-border-danger: #fca5a5;
+  --color-text-danger: #b91c1c;
+
+  /* ── Status: success ── */
+  --color-success: #16a34a;
+  --color-success-light: #f0fdf4;
+  --color-border-success: #86efac;
+  --color-text-success: #15803d;
+
+  /* ── Status: warning ── */
+  --color-warning: #d97706;
+  --color-warning-light: #fffbeb;
+  --color-border-warning: #fcd34d;
+  --color-text-warning: #b45309;
+
+  /* ── Status: info ── */
+  --color-info: #2563eb;
+  --color-background-info: #eff6ff;
+  --color-border-info: #3b82f6;
+  --color-text-info: #1d4ed8;
+
+  /* ── Typography ── */
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  /* ── Radius ── */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* ── Sidebar ── */
+  --sidebar-collapsed-width: 56px;
+  --sidebar-expanded-width: 240px;
+}
+
+/* ── Base ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ── Focus ring ── */
+:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
+}
+
+/* ── Scrollbar ── */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-neutral-200) transparent;
+}
+.scrollbar-thin::-webkit-scrollbar { width: 6px; height: 6px; }
+.scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: var(--color-neutral-200);
+  border-radius: 3px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb:hover { background: var(--color-neutral-300); }
+
+/* ── Animations ── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-12px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(12px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes shimmer {
+  from { background-position: -200% 0; }
+  to   { background-position: 200% 0; }
+}
+
+.animate-fade-in-up  { animation: fadeInUp  0.3s ease-out both; }
+.animate-fade-in     { animation: fadeIn    0.2s ease-out both; }
+.animate-slide-in-left  { animation: slideInLeft  0.3s ease-out both; }
+.animate-slide-in-right { animation: slideInRight 0.3s ease-out both; }
+.animate-scale-in    { animation: scaleIn   0.2s ease-out both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in-up,
+  .animate-fade-in,
+  .animate-slide-in-left,
+  .animate-slide-in-right,
+  .animate-scale-in {
+    animation: none;
+  }
+}
