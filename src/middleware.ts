@@ -2,14 +2,15 @@ import { NextResponse, type NextRequest } from 'next/server'
 import { createServerClient } from '@supabase/ssr'
 import { getRequiredModule, PUBLIC_ROUTES } from '@/config/routes'
 
+// Rotas que, se logado-com-empresa acessar, são redirecionadas para /dashboard
+const AUTH_ENTRY_ROUTES = ['/', '/login', '/onboarding', '/criar-conta']
+
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
-  // Rota pública: libera sem verificação
   const isPublic = PUBLIC_ROUTES.some(
     (route) => pathname === route || pathname.startsWith(route + '/')
   )
-  if (isPublic) return NextResponse.next()
 
   // Inicializa Supabase para ler cookies de sessão
   let response = NextResponse.next({ request })
@@ -18,7 +19,9 @@ export async function middleware(request: NextRequest) {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
-        getAll() { return request.cookies.getAll() },
+        getAll() {
+          return request.cookies.getAll()
+        },
         setAll(cookiesToSet) {
           cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value))
           response = NextResponse.next({ request })
@@ -32,7 +35,41 @@ export async function middleware(request: NextRequest) {
 
   const { data: { user } } = await supabase.auth.getUser()
 
-  // Não autenticado → /login
+  // Rotas públicas: ainda checamos se logado-com-empresa entrou em rota de "entrada"
+  if (isPublic) {
+    if (user) {
+      const meta = user.app_metadata ?? {}
+      const empresaId: string | null = meta.empresa_id ?? null
+      const userRole: string = meta.user_role ?? 'anonymous'
+
+      // Logado-com-empresa em rota de entrada → /dashboard
+      if (
+        empresaId &&
+        AUTH_ENTRY_ROUTES.some((r) => pathname === r || pathname.startsWith(r + '/'))
+      ) {
+        const url = request.nextUrl.clone()
+        url.pathname = '/dashboard'
+        return NextResponse.redirect(url)
+      }
+
+      // Superadmin sem empresa em qualquer rota pública (exceto /admin) → /admin
+      if (
+        !empresaId &&
+        userRole === 'superadmin' &&
+        !pathname.startsWith('/admin') &&
+        pathname !== '/pesquisa' &&
+        pathname !== '/precos' &&
+        !pathname.startsWith('/for/')
+      ) {
+        const url = request.nextUrl.clone()
+        url.pathname = '/admin'
+        return NextResponse.redirect(url)
+      }
+    }
+    return response
+  }
+
+  // Rotas privadas: não autenticado → /login
   if (!user) {
     const url = request.nextUrl.clone()
     url.pathname = '/login'
@@ -45,24 +82,17 @@ export async function middleware(request: NextRequest) {
   const enabledModules: string[] = meta.enabled_modules ?? []
   const isSuperadmin = userRole === 'superadmin'
 
-  // Superadmin sem empresa → /admin (não passa pelo onboarding)
+  // Superadmin sem empresa → /admin
   if (isSuperadmin && !empresaId && !pathname.startsWith('/admin')) {
     const url = request.nextUrl.clone()
     url.pathname = '/admin'
     return NextResponse.redirect(url)
   }
 
-  // Autenticado sem empresa (não-superadmin) → /onboarding
-  if (!empresaId && !isSuperadmin && !pathname.startsWith('/onboarding')) {
+  // Não-superadmin sem empresa → /onboarding
+  if (!empresaId && !isSuperadmin) {
     const url = request.nextUrl.clone()
     url.pathname = '/onboarding'
-    return NextResponse.redirect(url)
-  }
-
-  // Autenticado com empresa → sai do onboarding
-  if (empresaId && pathname.startsWith('/onboarding')) {
-    const url = request.nextUrl.clone()
-    url.pathname = '/dashboard'
     return NextResponse.redirect(url)
   }
 

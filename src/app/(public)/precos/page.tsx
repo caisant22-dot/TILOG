@@ -30,15 +30,26 @@ export default async function PrecosPage() {
             Comece grátis e escale conforme seu negócio cresce.
           </p>
 
-          <PricingProvider>
-            <PricingToggle />
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
-              {planos.map((plano) => (
-                <PlanCard key={plano.id} plano={plano} />
-              ))}
+          {planos.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-[var(--color-text-secondary)]">
+                Estamos atualizando nossos planos.{' '}
+                <Link href="/" className="underline">
+                  Voltar ao início
+                </Link>
+              </p>
             </div>
-          </PricingProvider>
+          ) : (
+            <PricingProvider>
+              <PricingToggle />
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
+                {planos.map((plano) => (
+                  <PlanCard key={plano.id} plano={plano} />
+                ))}
+              </div>
+            </PricingProvider>
+          )}
         </div>
 
         <div className="text-center mt-12 space-y-2">

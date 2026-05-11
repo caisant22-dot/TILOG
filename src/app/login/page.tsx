@@ -33,7 +33,10 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[var(--color-surface-raised)] p-4">
-      <Link href="/" className="fixed top-4 left-4 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text)]">
+      <Link
+        href="/"
+        className="fixed top-4 left-4 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text)]"
+      >
         ← Voltar para o site
       </Link>
 
@@ -52,6 +55,7 @@ export default function LoginPage() {
             placeholder="seu@email.com"
             required
             autoFocus
+            autoComplete="email"
           />
           <Input
             label="Senha"
@@ -60,12 +64,34 @@ export default function LoginPage() {
             onChange={(e) => setPassword(e.target.value)}
             placeholder="••••••••"
             required
+            autoComplete="current-password"
           />
+
           {error && <p className="text-sm text-[var(--color-text-danger)]">{error}</p>}
+
           <Button type="submit" loading={loading} className="w-full">
             Entrar
           </Button>
+
+          <div className="text-center">
+            <Link
+              href="/recuperar-senha"
+              className="text-xs text-[var(--color-text-tertiary)] hover:text-[var(--color-text)] underline underline-offset-2"
+            >
+              Esqueci minha senha
+            </Link>
+          </div>
         </form>
+
+        <div className="text-center text-sm text-[var(--color-text-secondary)] pt-4 border-t border-[var(--color-border)]">
+          Ainda não tem conta?{' '}
+          <Link
+            href="/onboarding"
+            className="font-medium text-[var(--color-text)] underline underline-offset-2"
+          >
+            Criar conta grátis
+          </Link>
+        </div>
       </div>
     </div>
   )

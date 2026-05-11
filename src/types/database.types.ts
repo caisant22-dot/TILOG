@@ -1268,9 +1268,10 @@ export type Database = {
           main_challenge: string | null
           primary_goal: string | null
           raw_responses: Json
+          session_id: string | null
           team_size: string | null
           updated_at: string
-          user_id: string
+          user_id: string | null
           user_role_answer: string | null
         }
         Insert: {
@@ -1287,9 +1288,10 @@ export type Database = {
           main_challenge?: string | null
           primary_goal?: string | null
           raw_responses?: Json
+          session_id?: string | null
           team_size?: string | null
           updated_at?: string
-          user_id: string
+          user_id?: string | null
           user_role_answer?: string | null
         }
         Update: {
@@ -1306,9 +1308,10 @@ export type Database = {
           main_challenge?: string | null
           primary_goal?: string | null
           raw_responses?: Json
+          session_id?: string | null
           team_size?: string | null
           updated_at?: string
-          user_id?: string
+          user_id?: string | null
           user_role_answer?: string | null
         }
         Relationships: []
@@ -1669,7 +1672,7 @@ export type Database = {
           cargo: string
           created_at: string | null
           data_entrada: string | null
-          empresa_id: string
+          empresa_id: string | null
           id: string
           nome: string
           role: string
@@ -1680,7 +1683,7 @@ export type Database = {
           cargo: string
           created_at?: string | null
           data_entrada?: string | null
-          empresa_id: string
+          empresa_id?: string | null
           id: string
           nome: string
           role: string
@@ -1691,7 +1694,7 @@ export type Database = {
           cargo?: string
           created_at?: string | null
           data_entrada?: string | null
-          empresa_id?: string
+          empresa_id?: string | null
           id?: string
           nome?: string
           role?: string
@@ -1802,6 +1805,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      claim_onboarding_session: {
+        Args: { p_session_id: string; p_user_id: string }
+        Returns: undefined
+      }
       complete_onboarding: {
         Args: {
           p_business_type: string

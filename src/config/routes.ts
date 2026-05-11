@@ -39,6 +39,9 @@ export function getRequiredModule(pathname: string): string | null {
 export const PUBLIC_ROUTES = [
   '/',
   '/login',
+  '/onboarding',
+  '/criar-conta',
+  '/recuperar-senha',
   '/acesso-negado',
   '/for',
   '/precos',
